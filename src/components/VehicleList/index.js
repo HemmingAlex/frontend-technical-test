@@ -1,10 +1,12 @@
 import React from 'react';
 import useData from './useData';
 import './style.scss';
+import { useScreen } from './screenHook';
 
 export default function VehicleList() {
-  // eslint-disable-next-line no-unused-vars
   const [loading, error, vehicles] = useData();
+  const { width } = useScreen();
+  const isDesktop = 800;
 
   if (loading) {
     return <div data-testid="loading">Loading</div>;
@@ -15,26 +17,48 @@ export default function VehicleList() {
   }
 
   return (
-    <div data-testid="results">
-      <p>List of vehicles will be displayed here</p>
-      <p>
-        Visit
-        <a href="/api/vehicles.json" target="_blank"> /api/vehicles.json</a>
-        {' '}
-        (main endpoint)
-      </p>
-      <p>
-        Visit
-        <a href="/api/vehicle_fpace.json" target="_blank">/api/vehicle_fpace.json</a>
-        {' '}
-        (detail endpoint - apiUrl)
-      </p>
-      <p>
-        Visit
-        <a href="/api/vehicle_xf.json" target="_blank">/api/vehicle_xf.json</a>
-        {' '}
-        (vehicle without any price)
-      </p>
+    <div
+      data-testid="results"
+      className="VehicleList"
+    >
+
+      {vehicles.map((input) => (
+        <div
+          style={{ margin: '0', padding: '0' }}
+          className="item"
+          key={input.id}
+        >
+
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div className="Card">
+
+              {width > isDesktop ? <img src={input.media[0].url} alt="car" /> : <img src={input.media[0].url} alt="car" /> }
+              {/* the tablet image looks terrible */}
+              <div className="Info">
+
+                <h1>
+                  {input.media[0].name.toUpperCase()}
+                  {' '}
+                  NAME
+                </h1>
+
+                {input.price && (
+                <div className="Price" role="note">
+                  From
+                  {' '}
+                  {input.price}
+                </div>
+                )}
+
+                <div className="Description">
+                  {input.description}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      ))}
     </div>
   );
 }
