@@ -32,8 +32,8 @@ export default function VehicleList() {
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <div className="Card">
 
-              {width > isDesktop ? <img src={input.media[0].url} alt="car" /> : <img src={input.media[0].url} alt="car" /> }
-              {/* the tablet image looks terrible */}
+              {width > isDesktop ? <img src={input.media[0].url} height={400} width={800} alt="car" /> : <img src={input.media[0].url} alt="car" /> }
+              {/* the tablet image seems unlikely to be an improvment */}
               <div className="Info">
 
                 <h1>
